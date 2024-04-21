@@ -40,4 +40,8 @@ class Transaction extends ModelsTransaction
     public function targetUser(){
         return $this->belongsTo(User::class);
     }
+
+    public function seamlessTransaction(){
+        return $this->belongsTo(SeamlessTransaction::class);
+    }
 }

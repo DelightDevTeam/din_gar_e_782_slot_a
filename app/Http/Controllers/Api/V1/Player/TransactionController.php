@@ -24,7 +24,7 @@ class TransactionController extends Controller
 
         $user = auth()->user();
 
-        $transactions = $user->transactions()->whereBetween("created_at", [$from, $to])
+        $transactions = $user->transactions()->with(["seamlessTransaction.product:id,name"])->whereBetween("created_at", [$from, $to])
         ->orderBy("id", "DESC")
         ->paginate();
 

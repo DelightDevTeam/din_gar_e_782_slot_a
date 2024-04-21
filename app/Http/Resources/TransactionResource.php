@@ -16,6 +16,7 @@ class TransactionResource extends JsonResource
     {
         return [
             "id" => $this->id,
+            "product_name" => $this->seamlessTransaction->product->name,
             "closing_balance" => $this->amountFloat + $this->meta['opening_balance'],
             "type" => $this->type,
             "amount" => $this->amountFloat,

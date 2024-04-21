@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\User;
+use App\Models\Admin\Product;
 use App\Models\SeamlessEvent;
 use App\Enums\TransactionStatus;
 use Illuminate\Database\Eloquent\Model;
@@ -43,5 +44,10 @@ class SeamlessTransaction extends Model
     public function transactions()
     {
         return $this->hasMany(Transaction::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }
