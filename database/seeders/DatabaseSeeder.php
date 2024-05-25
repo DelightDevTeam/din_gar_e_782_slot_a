@@ -20,10 +20,12 @@ class DatabaseSeeder extends Seeder
             RoleUserTableSeeder::class,
             BankTableSeeder::class,
             GameTypeTableSeeder::class,
+            ProductCodeSeeder::class,
             ProductTableSeeder::class,
             GameTypeProductTableSeeder::class,
             BannerSeeder::class,
-            BannerTextSeeder::class
+            BannerTextSeeder::class,
+            CQ9GameListTableSeeder::class
         ]);
       
     }
