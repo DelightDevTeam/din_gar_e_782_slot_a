@@ -1,8 +1,9 @@
 <?php
+
 namespace App\Http\Controllers\Api\V1\Game;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
@@ -27,11 +28,11 @@ class LaunchGameController extends Controller
         $user = Auth::user();
         $operatorCode = Config::get('game.api.operator_code');
         $secretKey = Config::get('game.api.secret_key');
-        $apiUrl = Config::get('game.api.url') . '/Seamless/LaunchGame';
+        $apiUrl = Config::get('game.api.url').'/Seamless/LaunchGame';
         $password = Config::get('game.api.password');
         // Generate the signature
         $requestTime = now()->format('YmdHis');
-        $signature = md5($operatorCode . $requestTime . 'launchgame' . $secretKey);
+        $signature = md5($operatorCode.$requestTime.'launchgame'.$secretKey);
 
         // Prepare the payload
         $data = [
@@ -64,5 +65,4 @@ class LaunchGameController extends Controller
             return response()->json(['error' => 'An unexpected error occurred', 'exception' => $e->getMessage()], 500);
         }
     }
-
 }

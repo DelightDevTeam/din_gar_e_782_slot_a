@@ -5,8 +5,8 @@ namespace App\Models;
 use App\Enums\TransactionName;
 use App\Models\PlaceBet;
 use Bavix\Wallet\Models\Transaction as ModelsTransaction;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Transaction extends ModelsTransaction
 {
@@ -19,7 +19,7 @@ class Transaction extends ModelsTransaction
         'wallet_id' => 'int',
         'confirmed' => 'bool',
         'meta' => 'json',
-        'name' => TransactionName::class
+        'name' => TransactionName::class,
     ];
 
     public function user()
@@ -37,11 +37,13 @@ class Transaction extends ModelsTransaction
         return $this->hasMany(PlaceBet::class, 'transaction_id', 'id');
     }
 
-    public function targetUser(){
+    public function targetUser()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function seamlessTransaction(){
+    public function seamlessTransaction()
+    {
         return $this->belongsTo(SeamlessTransaction::class);
     }
 }

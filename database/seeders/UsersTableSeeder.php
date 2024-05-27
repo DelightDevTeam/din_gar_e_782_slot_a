@@ -16,29 +16,29 @@ class UsersTableSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = $this->createUser(UserType::Admin, "Owner", "Owner898787", "09123456789");
-        (new WalletService())->deposit($admin, 10 * 100_000, TransactionName::CapitalDeposit);
+        $admin = $this->createUser(UserType::Admin, 'Owner', 'Owner898787', '09123456789');
+        (new WalletService)->deposit($admin, 10 * 100_000, TransactionName::CapitalDeposit);
 
-        $agent_1 = $this->createUser(UserType::Agent, "Agent 1", "AG898737", "09112345674", $admin->id);
-        (new WalletService())->transfer($admin, $agent_1, 5 * 100_000, TransactionName::CreditTransfer);
+        $agent_1 = $this->createUser(UserType::Agent, 'Agent 1', 'AG898737', '09112345674', $admin->id);
+        (new WalletService)->transfer($admin, $agent_1, 5 * 100_000, TransactionName::CreditTransfer);
 
-        $player_1 = $this->createUser(UserType::Player, "ShweDinKer 1", "SDK111111", "09111111111", $agent_1->id);
-        (new WalletService())->transfer($agent_1, $player_1, 300000, TransactionName::CreditTransfer);
-        $player_2 = $this->createUser(UserType::Player, "ShweDinKer 2", "SDK222222", "09111111112", $agent_1->id);
-        (new WalletService())->transfer($agent_1, $player_2, 300000, TransactionName::CreditTransfer);
+        $player_1 = $this->createUser(UserType::Player, 'ShweDinKer 1', 'SDK111111', '09111111111', $agent_1->id);
+        (new WalletService)->transfer($agent_1, $player_1, 300000, TransactionName::CreditTransfer);
+        $player_2 = $this->createUser(UserType::Player, 'ShweDinKer 2', 'SDK222222', '09111111112', $agent_1->id);
+        (new WalletService)->transfer($agent_1, $player_2, 300000, TransactionName::CreditTransfer);
     }
 
     private function createUser(UserType $type, $name, $user_name, $phone, $parent_id = null)
     {
         return User::create([
-            'name'           => $name,
-            'user_name'      => $user_name,
-            'phone'          => $phone,
-            'password'       => Hash::make('password'),
-            'agent_id'      => $parent_id,
-            'status'         => 1,
+            'name' => $name,
+            'user_name' => $user_name,
+            'phone' => $phone,
+            'password' => Hash::make('password'),
+            'agent_id' => $parent_id,
+            'status' => 1,
             'is_changed_password' => 1,
-            'type' => $type->value
+            'type' => $type->value,
         ]);
     }
 }

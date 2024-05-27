@@ -18,35 +18,40 @@ class PullReport extends Command
     protected $signature = 'make:pull-report';
 
     protected $operatorCode;
+
     protected $secretKey;
+
     protected $apiUrl;
+
     public const VERSION_KEY = 1;
 
     public function __construct()
     {
         parent::__construct();
-        $this->operatorCode =   config('game.api.operator_code');
-        $this->secretKey =  config('game.api.secret_key');
-        $this->apiUrl =  config('game.api.url');
+        $this->operatorCode = config('game.api.operator_code');
+        $this->secretKey = config('game.api.secret_key');
+        $this->apiUrl = config('game.api.url');
     }
+
     /**
      * The console command description.
      *
      * @var string
      */
     protected $description = 'Command description';
+
     /**
      * Execute the console command.
      */
     public function handle()
     {
-        $apiUrl = $this->apiUrl . '/Seamless/PullReport';
+        $apiUrl = $this->apiUrl.'/Seamless/PullReport';
 
         $operatorCode = Config::get('game.api.operator_code');
         $secretKey = Config::get('game.api.secret_key');
         // Generate the signature
         $requestTime = now()->format('YmdHis');
-        $signature = md5($operatorCode . $requestTime . 'pullreport' . $secretKey);
+        $signature = md5($operatorCode.$requestTime.'pullreport'.$secretKey);
         // Prepare the payload
         $data = [
             'OperatorCode' => $operatorCode,
@@ -63,32 +68,30 @@ class PullReport extends Command
 
         if ($response->successful()) {
             $data = $response->json();
-            if($data['Wagers'] != null)
-            {
-            $data = $response['Wagers'];
-  
-            foreach($data as $report)
-            {
-                Report::create([
-                    'member_name' => $report['MemberName'],
-                    'wager_id' => $report['WagerID'],
-                    'product_code' => $report['ProductID'],
-                    'game_type_id' => $report['GameType'],
-                    'game_name' => $report['GameID'],
-                    'game_round_id' => $report['GameRoundID'],
-                    'valid_bet_amount' => $report['ValidBetAmount'],
-                    'bet_amount' => $report['BetAmount'],
-                    'payout_amount' => $report['PayoutAmount'],
-                    'commission_amount' => $report['CommissionAmount'],
-                    'jack_pot_amount' => $report['JackpotAmount'],
-                    'jp_bet' => $report['JPBet'],
-                    'status' => $report['Status'],
-                    'created_on' => $report['CreatedOn'],
-                    'modified_on' => $report['ModifiedOn'],
-                    'settlement_date' => $report['SettlementDate']
-                ]);
+            if ($data['Wagers'] != null) {
+                $data = $response['Wagers'];
+
+                foreach ($data as $report) {
+                    Report::create([
+                        'member_name' => $report['MemberName'],
+                        'wager_id' => $report['WagerID'],
+                        'product_code' => $report['ProductID'],
+                        'game_type_id' => $report['GameType'],
+                        'game_name' => $report['GameID'],
+                        'game_round_id' => $report['GameRoundID'],
+                        'valid_bet_amount' => $report['ValidBetAmount'],
+                        'bet_amount' => $report['BetAmount'],
+                        'payout_amount' => $report['PayoutAmount'],
+                        'commission_amount' => $report['CommissionAmount'],
+                        'jack_pot_amount' => $report['JackpotAmount'],
+                        'jp_bet' => $report['JPBet'],
+                        'status' => $report['Status'],
+                        'created_on' => $report['CreatedOn'],
+                        'modified_on' => $report['ModifiedOn'],
+                        'settlement_date' => $report['SettlementDate'],
+                    ]);
+                }
             }
-        }
             $this->line('<fg=green>Pull Report success</>');
 
         } else {

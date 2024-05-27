@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Admin\ProductCode;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Seeder;
 
 class ProductCodeSeeder extends Seeder
 {
@@ -35,14 +35,14 @@ class ProductCodeSeeder extends Seeder
                 'currency_code' => 'MMK',
                 'conversion_rate' => '1.0000',
             ],
-             [
+            [
                 'product' => '1004',
                 'product_code' => 'Big Gaming',
                 'game_type' => 'Slot(1)',
                 'currency_code' => 'MMK',
                 'conversion_rate' => '1000.0000',
             ],
-             [
+            [
                 'product' => '1004',
                 'product_code' => 'Big Gaming',
                 'game_type' => 'Live Casino(2)',
@@ -394,7 +394,7 @@ class ProductCodeSeeder extends Seeder
                 'currency_code' => 'MMK',
                 'conversion_rate' => '1.0000',
             ],
-            
+
         ];
 
         ProductCode::insert($data);

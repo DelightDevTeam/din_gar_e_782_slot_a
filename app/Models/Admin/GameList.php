@@ -11,8 +11,8 @@ class GameList extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['code', 'name',  'game_type_id','product_id', 'image_url', 'click_count'];
-    
+    protected $fillable = ['code', 'name',  'game_type_id', 'product_id', 'image_url', 'click_count', 'status'];
+
     public function product()
     {
         return $this->belongsTo(Product::class);
@@ -22,9 +22,9 @@ class GameList extends Model
     {
         return $this->belongsTo(GameType::class);
     }
+
     public function getImgUrlAttribute()
     {
-        return asset('/game_logo/' . $this->image);
+        return asset('/game_logo/'.$this->image);
     }
-
 }

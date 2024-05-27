@@ -10,7 +10,6 @@ use App\Services\Slot\Dto\RequestTransaction;
 
 class SlotWebhookValidator
 {
-
     protected ?SeamlessTransaction $existingTransaction;
 
     // TODO: imp: chang with actual wager
@@ -25,7 +24,6 @@ class SlotWebhookValidator
     protected array $response;
 
     /**
-     * 
      * @var RequestTransaction[]
      */
     protected $requestTransactions;
@@ -36,11 +34,11 @@ class SlotWebhookValidator
 
     public function validate()
     {
-        if (!$this->isValidSignature()) {
+        if (! $this->isValidSignature()) {
             return $this->response(SlotWebhookResponseCode::InvalidSign);
         }
 
-        if (!$this->request->getMember()) {
+        if (! $this->request->getMember()) {
             return $this->response(SlotWebhookResponseCode::MemberNotExists);
         }
 
@@ -49,18 +47,18 @@ class SlotWebhookValidator
 
             $this->requestTransactions[] = $requestTransaction;
 
-            if ($requestTransaction->TransactionID && !$this->isNewTransaction($requestTransaction)) {
+            if ($requestTransaction->TransactionID && ! $this->isNewTransaction($requestTransaction)) {
                 return $this->response(SlotWebhookResponseCode::DuplicateTransaction);
             }
 
-            if (!in_array($this->request->getMethodName(), ["placebet", "bonus", "jackpot", "buyin", "buyout", "pushbet"]) && $this->isNewWager($requestTransaction)) {
+            if (! in_array($this->request->getMethodName(), ['placebet', 'bonus', 'jackpot', 'buyin', 'buyout', 'pushbet']) && $this->isNewWager($requestTransaction)) {
                 return $this->response(SlotWebhookResponseCode::BetNotExist);
             }
 
             $this->totalTransactionAmount += $requestTransaction->TransactionAmount;
         }
 
-        if (!$this->hasEnoughBalance()) {
+        if (! $this->hasEnoughBalance()) {
             return $this->response(SlotWebhookResponseCode::MemberInsufficientBalance);
         }
 
@@ -75,20 +73,20 @@ class SlotWebhookValidator
 
         $secretKey = $this->getSecretKey();
 
-        $signature = md5($operatorCode . $requestTime . $method . $secretKey);
+        $signature = md5($operatorCode.$requestTime.$method.$secretKey);
 
         return $this->request->getSign() == $signature;
     }
 
     protected function isNewWager(RequestTransaction $transaction)
     {
-        return !$this->getExistingWager($transaction);
+        return ! $this->getExistingWager($transaction);
     }
 
     public function getExistingWager(RequestTransaction $transaction)
     {
-        if (!isset($this->existingWager)) {
-            $this->existingWager = Wager::where("seamless_wager_id", $transaction->WagerID)->first();
+        if (! isset($this->existingWager)) {
+            $this->existingWager = Wager::where('seamless_wager_id', $transaction->WagerID)->first();
         }
 
         return $this->existingWager;
@@ -96,13 +94,13 @@ class SlotWebhookValidator
 
     protected function isNewTransaction(RequestTransaction $transaction)
     {
-        return !$this->getExistingTransaction($transaction);
+        return ! $this->getExistingTransaction($transaction);
     }
 
     public function getExistingTransaction(RequestTransaction $transaction)
     {
-        if (!isset($this->existingTransaction)) {
-            $this->existingTransaction = SeamlessTransaction::where("seamless_transaction_id", $transaction->TransactionID)->first();
+        if (! isset($this->existingTransaction)) {
+            $this->existingTransaction = SeamlessTransaction::where('seamless_transaction_id', $transaction->TransactionID)->first();
         }
 
         return $this->existingTransaction;
@@ -110,7 +108,7 @@ class SlotWebhookValidator
 
     public function getAfterBalance()
     {
-        if (!isset($this->after_balance)) {
+        if (! isset($this->after_balance)) {
             $this->after_balance = $this->getBeforeBalance() + $this->totalTransactionAmount;
         }
 
@@ -119,7 +117,7 @@ class SlotWebhookValidator
 
     public function getBeforeBalance()
     {
-        if (!isset($this->before_balance)) {
+        if (! isset($this->before_balance)) {
             $this->before_balance = $this->request->getMember()->balanceFloat;
         }
 
@@ -138,7 +136,7 @@ class SlotWebhookValidator
 
     protected function getSecretKey()
     {
-        return config("game.api.secret_key");
+        return config('game.api.secret_key');
     }
 
     protected function response(SlotWebhookResponseCode $responseCode)

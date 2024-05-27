@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
 
-            $this->call([
+        $this->call([
             PermissionsTableSeeder::class,
             RolesTableSeeder::class,
             PermissionRoleTableSeeder::class,
@@ -25,8 +25,10 @@ class DatabaseSeeder extends Seeder
             GameTypeProductTableSeeder::class,
             BannerSeeder::class,
             BannerTextSeeder::class,
-            CQ9GameListTableSeeder::class
+            AsiaGamingTablesSeeder::class,
+            CQ9GameListTableSeeder::class,
+            EvolutionGamingTableSeeder::class,
         ]);
-      
+
     }
 }
