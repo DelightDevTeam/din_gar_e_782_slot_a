@@ -50,7 +50,7 @@ class GameTypeTableSeeder extends Seeder
                 'name_mm' => 'အစမ်း ၁',
                 'code' => '11',
                 'order' => '5',
-                'status' => 1,
+                'status' => 0,
                 'img' => 'fishing.png',
             ],
             [
@@ -58,7 +58,7 @@ class GameTypeTableSeeder extends Seeder
                 'name_mm' => 'အစမ်း ၂',
                 'code' => '12',
                 'order' => '5',
-                'status' => 1,
+                'status' => 0,
                 'img' => 'fishing.png',
             ],
         ];
